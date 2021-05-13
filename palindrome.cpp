@@ -46,6 +46,7 @@ int main(){
         }
     }
     //int endsol[(int)index.size()+1];
+    //new line, for testing purposes
     set<int> endsol;
     for(int i = 0; i < (int)index.size(); i++){
         int leftodd1 = i, rightodd1 = i;
