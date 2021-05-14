@@ -1,8 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
-int LCS(string s, string q, int m, int n){ 
-    int ans[m+1][1+n]; 
-    for(int i = 0; i <= m; i++) { 
+int LCS(string s, string q, int n){ 
+    long long ans[n+1][1+n]; 
+    for(int i = 0; i <= n; i++) { 
         for(int j = 0; j <= n; j++){ 
         if(i == 0 or j == 0){
             ans[i][j] = 0; 
@@ -13,7 +13,7 @@ int LCS(string s, string q, int m, int n){
         }
         } 
     } 
-    return ans[m][n]; 
+    return ans[n][n]; 
 } 
 int main(){
     int n; 
@@ -24,8 +24,8 @@ int main(){
     for(int i = n-1; i >= 0; i--){
         q += s[i];
     }
-    /*for(int i = 0; i < (int)q.size(); i++){
+    /*for(int i = 0; i <= (int)q.size()+1; i++){
         cout << q[i] << endl;
     }*/
-    cout << n - LCS(s,q,n,n) << endl;
+    cout << n - LCS(s,q,n) << endl;
 }
