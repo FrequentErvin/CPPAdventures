@@ -5,9 +5,6 @@
 #define mp make_pair
 using namespace std;
 
-
-
-
 int distLeafFriend(int fr, int leaf, vector<vector<int> > adj){
 	map<int,int> distance;
 	map<int,bool> vis;
@@ -18,7 +15,8 @@ int distLeafFriend(int fr, int leaf, vector<vector<int> > adj){
     int f = q.front();
     //cout << f << " ";
     q.pop();
-    for(auto i : adj[f]){
+	int n = adj[f].size();
+    for(int i = 0; i < n; i++){
       if (!vis[i]) {
         distance[i] = distance[f] + 1;
         q.push(i);
