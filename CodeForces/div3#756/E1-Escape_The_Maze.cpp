@@ -13,10 +13,8 @@ int distLeafFriend(int fr, int leaf, vector<vector<int> > adj){
 	vis[fr] = true;
   while (!q.empty()) {
     int f = q.front();
-    //cout << f << " ";
     q.pop();
-	int n = adj[f].size();
-    for(int i = 0; i < n; i++){
+    for(auto i : adj[f]){
       if (!vis[i]) {
         distance[i] = distance[f] + 1;
         q.push(i);
@@ -26,7 +24,6 @@ int distLeafFriend(int fr, int leaf, vector<vector<int> > adj){
   }
 	return distance[leaf];
 }
-
 int main(){
 ios_base::sync_with_stdio(false); cin.tie(NULL);
  int t;
@@ -37,42 +34,38 @@ ios_base::sync_with_stdio(false); cin.tie(NULL);
 	int n,k;
 	cin >> n;
 	cin >> k;
-	int fr[k];
-	//cout << "Input friend locations: " << endl;
+	vector<int> fr;
 	for(int i = 0; i < k; i++){
-		cin >> fr[i];
+            int r;
+            cin >> r;
+            fr.pb(r-1);
 	}
 	adj.resize(n+1);
-	//cout << "Input graph: " << endl;
 	for(int i = 0; i < n-1; i++){
 		int u,v;
 			cin>>u>>v;
-			adj[u].pb(v);
-			adj[v].pb(u);
+			adj[u-1].pb(v-1);
+			adj[v-1].pb(u-1);
 	}
-
-	for(int i = 1; i < n+1; i++){
-		if((int)adj[i].size() == 1){
+	for(int i = 0; i < n; i++){
+		if((int)adj[i].size() == 1 and i != 0){
 			leaves.pb(i);
 		}
 	}
-	int numLeaves = (int)leaves.size();
 	vector<vector<int> > frlDistance;
 	frlDistance.resize(k+1);
 	vector<int> vladDistance;
 	for(auto j : leaves){
-		vladDistance.pb(distLeafFriend(1,j,adj));
+		vladDistance.pb(distLeafFriend(0,j,adj));
 	}
 	for(int i = 0; i < k; i++){
 		for(auto j : leaves){
 			frlDistance[i].pb(distLeafFriend(fr[i],j,adj));
 		}
 	}
+    int sizeLeaf = leaves.size();
 	bool globalgood = false;
-	
-	//beef of the logic
-	
-	for(int i = 0; i < numLeaves; i++){
+	for(int i = 0; i < sizeLeaf; i++){
 		bool good = true;
 		for(int j = 0; j < k; j++){
 			if(frlDistance[j][i] < vladDistance[i]){
@@ -85,9 +78,6 @@ ios_base::sync_with_stdio(false); cin.tie(NULL);
 			break;
 		}
 	}
-	
-	//end check
-	
 	if(globalgood) cout << "YES" << endl;
 	else cout << "NO" << endl;
   }
